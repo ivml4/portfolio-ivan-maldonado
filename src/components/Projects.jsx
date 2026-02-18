@@ -2,22 +2,25 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import useReveal from '../hooks/useReveal'
 import { useLang } from '../context/LangContext'
 import { translations } from '../i18n'
+import { assetUrl } from '../utils/assetUrl'
 import ProjectModal from './ProjectModal'
 import './Projects.css'
+
+const img = (path) => assetUrl(`images/${path}`)
 
 const projectsData = [
   {
     id: 'geotour',
     title: 'GeoTour',
     categoryKey: 'web',
-    image: '/images/geotour-portada.jpeg',
+    image: img('geotour-portada.jpeg'),
     images: [
-      '/images/geotour-portada.jpeg',
-      '/images/geotour-1.jpeg',
-      '/images/geotour-2.jpeg',
-      '/images/geotour-3.jpeg',
-      '/images/geotour-4.jpeg',
-      '/images/geotour-5.jpeg',
+      img('geotour-portada.jpeg'),
+      img('geotour-1.jpeg'),
+      img('geotour-2.jpeg'),
+      img('geotour-3.jpeg'),
+      img('geotour-4.jpeg'),
+      img('geotour-5.jpeg'),
     ],
     siteUrl: 'https://geotour.com.ar/',
     review: {
@@ -28,19 +31,19 @@ const projectsData = [
       color: '#7c3aed',
       rating: 5,
       text: 'Desde el primer momento mostró profesionalismo, compromiso y una gran capacidad para interpretar exactamente lo que necesitábamos. Supo plasmar la identidad de GeoTour de manera clara, moderna y funcional, siempre con muy buena predisposición para escuchar sugerencias, resolver dudas y proponer mejoras. El resultado final superó nuestras expectativas, tanto en diseño como en usabilidad. Sin dudas, lo recomiendo a quienes busquen un desarrollador web confiable, creativo y responsable.',
-      textEn: 'From the very first moment he showed professionalism, commitment and a great ability to interpret exactly what we needed. He captured GeoTour\'s identity in a clear, modern and functional way, always with great willingness to listen to suggestions, resolve doubts and propose improvements. The final result exceeded our expectations, both in design and usability. Without a doubt, I recommend him to anyone looking for a reliable, creative and responsible web developer.',
+      textEn: "From the very first moment he showed professionalism, commitment and a great ability to interpret exactly what we needed. He captured GeoTour's identity in a clear, modern and functional way, always with great willingness to listen to suggestions, resolve doubts and propose improvements. The final result exceeded our expectations, both in design and usability. Without a doubt, I recommend him to anyone looking for a reliable, creative and responsible web developer.",
     },
   },
   {
     id: 'cinema',
     title: 'Back to the Cinema',
     categoryKey: 'web',
-    image: '/images/back-to-cinema-portada.jpeg',
+    image: img('back-to-cinema-portada.jpeg'),
     images: [
-      '/images/back-to-cinema-portada.jpeg',
-      '/images/back-to-cinema-1.jpeg',
-      '/images/back-to-cinema-2.jpeg',
-      '/images/back-to-cinema-3.jpeg',
+      img('back-to-cinema-portada.jpeg'),
+      img('back-to-cinema-1.jpeg'),
+      img('back-to-cinema-2.jpeg'),
+      img('back-to-cinema-3.jpeg'),
     ],
     siteUrl: undefined,
   },
@@ -48,12 +51,12 @@ const projectsData = [
     id: 'gameteca',
     title: 'Gameteca',
     categoryKey: 'mobile',
-    image: '/images/gameteca-portada.jpeg',
+    image: img('gameteca-portada.jpeg'),
     images: [
-      '/images/gameteca-portada.jpeg',
-      '/images/gameteca-1.jpeg',
-      '/images/gameteca-2.jpeg',
-      '/images/gameteca-3.jpeg',
+      img('gameteca-portada.jpeg'),
+      img('gameteca-1.jpeg'),
+      img('gameteca-2.jpeg'),
+      img('gameteca-3.jpeg'),
     ],
     siteUrl: undefined,
   },
@@ -61,13 +64,13 @@ const projectsData = [
     id: 'yoga',
     title: 'Yoga Studio',
     categoryKey: 'web',
-    image: '/images/yoga-portada.jpeg',
+    image: img('yoga-portada.jpeg'),
     images: [
-      '/images/yoga-portada.jpeg',
-      '/images/yoga-1.jpeg',
-      '/images/yoga-2.jpeg',
-      '/images/yoga-3.jpeg',
-      '/images/yoga-4.jpeg',
+      img('yoga-portada.jpeg'),
+      img('yoga-1.jpeg'),
+      img('yoga-2.jpeg'),
+      img('yoga-3.jpeg'),
+      img('yoga-4.jpeg'),
     ],
     siteUrl: undefined,
   },
@@ -75,10 +78,10 @@ const projectsData = [
     id: 'portfolio',
     title: 'Portfolio',
     categoryKey: 'web',
-    image: '/images/portfolio-portada.jpeg',
+    image: img('portfolio-portada.jpeg'),
     images: [
-      '/images/portfolio-portada.jpeg',
-      '/images/portfolio-1.jpeg',
+      img('portfolio-portada.jpeg'),
+      img('portfolio-1.jpeg'),
     ],
     siteUrl: 'https://giuliana-zorzoli.netlify.app/',
     review: {

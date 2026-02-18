@@ -1,5 +1,6 @@
 import { useLang } from '../context/LangContext'
 import { translations } from '../i18n'
+import { assetUrl } from '../utils/assetUrl'
 import './Hero.css'
 
 export default function Hero() {
@@ -7,7 +8,7 @@ export default function Hero() {
   const tr = translations[lang].hero
 
   return (
-    <section id="inicio" className="hero">
+    <section id="inicio" className="hero" style={{ backgroundImage: `url(${assetUrl('images/banner.png')})` }}>
       <div className="hero-overlay" />
       <div className="hero-content">
         <h1 className="hero-name">Iván Maldonado</h1>
