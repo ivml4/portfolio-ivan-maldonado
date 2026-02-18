@@ -1,0 +1,108 @@
+@keyframes iconSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.services {
+  padding: 6rem 2rem;
+  background: var(--bg-primary);
+}
+
+.services-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.services-header {
+  margin-bottom: 3rem;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+@keyframes fadeSlideUpCard {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.service-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem 1.75rem;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  opacity: 0;
+}
+
+/* Stagger cards when parent grid is revealed */
+.services-grid.revealed .service-card {
+  animation: fadeSlideUpCard 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 0.12s);
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--accent), transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
+.service-card:hover::before {
+  opacity: 1;
+}
+
+.service-icon {
+  margin-bottom: 1.25rem;
+  display: inline-block;
+  transition: transform 0.5s ease;
+}
+
+.service-card:hover .service-icon {
+  animation: iconSpin 0.5s ease;
+}
+
+.service-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.service-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Light mode */
+[data-theme="light"] .service-card {
+  border-color: rgba(30, 50, 100, 0.18);
+  border-top: 2px solid #1e3264;
+  box-shadow: 0 4px 16px rgba(30, 50, 100, 0.08);
+}
+
+[data-theme="light"] .service-card:hover {
+  box-shadow: 0 14px 36px rgba(30, 50, 100, 0.15);
+  border-color: rgba(30, 50, 100, 0.35);
+}
