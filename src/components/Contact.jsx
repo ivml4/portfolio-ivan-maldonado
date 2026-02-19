@@ -1,25 +1,42 @@
-import { useRef } from 'react'
+import { useState, useRef } from 'react'
 import useReveal from '../hooks/useReveal'
 import { useLang } from '../context/LangContext'
 import { translations } from '../i18n'
 import './Contact.css'
 
-// Paso 1: activar con el email real → Paso 2: reemplazar por el hash que da FormSubmit
-// Ej: 'daabf6254aa3dfa7dade9834ad9d54d2'
 const FORMSUBMIT_ENDPOINT = '23fe958122ed4512d5941dc0bc670ade'
-
-// URL del portfolio una vez deployado — actualizar antes de subir a producción
-const NEXT_URL = 'https://ivml4.github.io/portfolio-ivan-maldonado/'
 
 export default function Contact() {
   const { lang } = useLang()
   const tr = translations[lang].contact
+  const [status, setStatus] = useState('idle') // 'idle' | 'sending' | 'sent' | 'error'
   const headerRef = useRef(null)
   const formRef = useRef(null)
   const infoRef = useRef(null)
   useReveal(headerRef)
   useReveal(formRef, { threshold: 0.1 })
   useReveal(infoRef, { threshold: 0.1 })
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setStatus('sending')
+    const data = new FormData(e.target)
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${FORMSUBMIT_ENDPOINT}`, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: data,
+      })
+      if (res.ok) {
+        setStatus('sent')
+        e.target.reset()
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
+  }
 
   return (
     <section id="contacto" className="contact">
@@ -32,14 +49,8 @@ export default function Contact() {
           <form
             className="contact-form reveal-left"
             ref={formRef}
-            action={`https://formsubmit.co/${FORMSUBMIT_ENDPOINT}`}
-            method="POST"
+            onSubmit={handleSubmit}
           >
-            {/* FormSubmit config */}
-            <input type="hidden" name="_captcha" value="false" />
-            <input type="hidden" name="_next" value={NEXT_URL} />
-            <input type="hidden" name="_subject" value="Nuevo mensaje desde el portfolio" />
-
             <div className="form-group">
               <label htmlFor="name">{tr.name}</label>
               <input
@@ -70,7 +81,18 @@ export default function Contact() {
                 required
               />
             </div>
-            <button type="submit" className="btn-submit">{tr.submit}</button>
+
+            {status === 'sent' ? (
+              <p className="form-success">{lang === 'es' ? '¡Mensaje enviado! Te respondo pronto.' : 'Message sent! I\'ll get back to you soon.'}</p>
+            ) : status === 'error' ? (
+              <p className="form-error">{lang === 'es' ? 'Algo salió mal. Intentá de nuevo.' : 'Something went wrong. Please try again.'}</p>
+            ) : null}
+
+            <button type="submit" className="btn-submit" disabled={status === 'sending'}>
+              {status === 'sending'
+                ? (lang === 'es' ? 'Enviando...' : 'Sending...')
+                : tr.submit}
+            </button>
           </form>
 
           <div className="contact-info reveal-right" ref={infoRef}>

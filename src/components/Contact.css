@@ -70,6 +70,18 @@
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3);
 }
 
+.form-success {
+  font-size: 0.85rem;
+  color: #10b981;
+  font-weight: 500;
+}
+
+.form-error {
+  font-size: 0.85rem;
+  color: #ef4444;
+  font-weight: 500;
+}
+
 .btn-submit {
   align-self: flex-start;
   padding: 0.75rem 2rem;
