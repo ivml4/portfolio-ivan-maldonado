@@ -9,7 +9,7 @@ import './Contact.css'
 const FORMSUBMIT_ENDPOINT = '23fe958122ed4512d5941dc0bc670ade'
 
 // URL del portfolio una vez deployado — actualizar antes de subir a producción
-const NEXT_URL = 'https://github.com/ivml4/portfolio-ivan-maldonado/settings/pages'
+const NEXT_URL = 'https://ivml4.github.io/portfolio-ivan-maldonado/'
 
 export default function Contact() {
   const { lang } = useLang()
