@@ -56,7 +56,6 @@ const projectsData = [
       img('gameteca-portada.jpeg'),
       img('gameteca-1.jpeg'),
       img('gameteca-2.jpeg'),
-      img('gameteca-3.jpeg'),
     ],
     siteUrl: undefined,
   },
@@ -83,7 +82,6 @@ const projectsData = [
       img('portfolio-portada.jpeg'),
       img('portfolio-1.jpeg'),
       img('portfolio-2.jpeg'),
-      img('portfolio-3.jpeg'),
     ],
     siteUrl: 'https://giuliana-zorzoli.netlify.app/',
     review: {
@@ -106,7 +104,6 @@ function getVisible() {
   return 3
 }
 
-const VISIBLE = 3 // used only for server/static reference
 
 export default function Projects() {
   const { lang } = useLang()
