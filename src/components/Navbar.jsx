@@ -9,6 +9,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('inicio')
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark')
+  const [menuOpen, setMenuOpen] = useState(false)
   const { lang, toggleLang } = useLang()
   const tr = translations[lang].nav
 
@@ -18,9 +19,7 @@ export default function Navbar() {
   }, [theme])
 
   useEffect(() => {
-    function onScroll() {
-      setScrolled(window.scrollY > 60)
-    }
+    function onScroll() { setScrolled(window.scrollY > 60) }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -31,9 +30,7 @@ export default function Navbar() {
       const el = document.getElementById(id)
       if (!el) return
       const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActiveSection(id)
-        },
+        ([entry]) => { if (entry.isIntersecting) setActiveSection(id) },
         { rootMargin: '-40% 0px -55% 0px' }
       )
       obs.observe(el)
@@ -42,14 +39,23 @@ export default function Navbar() {
     return () => observers.forEach((o) => o.disconnect())
   }, [])
 
+  // Close menu on scroll
+  useEffect(() => {
+    if (menuOpen) setMenuOpen(false)
+  }, [activeSection])
+
   function toggleTheme() {
     setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
   }
 
+  function closeMenu() { setMenuOpen(false) }
+
   return (
     <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
       <div className="navbar-inner">
-        <a href="#inicio" className="navbar-logo">Iván Maldonado</a>
+        <a href="#inicio" className="navbar-logo" onClick={closeMenu}>Iván Maldonado</a>
+
+        {/* Desktop links */}
         <ul className="navbar-links">
           <li><a href="#inicio" className={activeSection === 'inicio' ? 'active' : ''}>{tr.home}</a></li>
           <li><a href="#servicios" className={activeSection === 'servicios' ? 'active' : ''}>{tr.services}</a></li>
@@ -57,6 +63,7 @@ export default function Navbar() {
           <li><a href="#resenas" className={activeSection === 'resenas' ? 'active' : ''}>{tr.reviews}</a></li>
           <li><a href="#contacto" className={activeSection === 'contacto' ? 'active' : ''}>{tr.contact}</a></li>
         </ul>
+
         <div className="navbar-controls">
           <button className="lang-toggle" onClick={toggleLang} aria-label="Change language">
             <span className={lang === 'es' ? 'lang-opt lang-opt--active' : 'lang-opt'}>ES</span>
@@ -75,7 +82,26 @@ export default function Navbar() {
               </svg>
             )}
           </button>
+          {/* Hamburger */}
+          <button
+            className={`hamburger${menuOpen ? ' hamburger--open' : ''}`}
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label="Menu"
+          >
+            <span /><span /><span />
+          </button>
         </div>
+      </div>
+
+      {/* Mobile menu */}
+      <div className={`mobile-menu${menuOpen ? ' mobile-menu--open' : ''}`}>
+        <ul className="mobile-links">
+          <li><a href="#inicio" onClick={closeMenu} className={activeSection === 'inicio' ? 'active' : ''}>{tr.home}</a></li>
+          <li><a href="#servicios" onClick={closeMenu} className={activeSection === 'servicios' ? 'active' : ''}>{tr.services}</a></li>
+          <li><a href="#trabajos" onClick={closeMenu} className={activeSection === 'trabajos' ? 'active' : ''}>{tr.projects}</a></li>
+          <li><a href="#resenas" onClick={closeMenu} className={activeSection === 'resenas' ? 'active' : ''}>{tr.reviews}</a></li>
+          <li><a href="#contacto" onClick={closeMenu} className={activeSection === 'contacto' ? 'active' : ''}>{tr.contact}</a></li>
+        </ul>
       </div>
     </nav>
   )

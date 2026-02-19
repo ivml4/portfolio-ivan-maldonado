@@ -184,3 +184,15 @@
   border-color: var(--accent);
   color: var(--accent);
 }
+
+/* ── Responsive ─────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-name { font-size: 2.4rem; }
+  .hero-subtitle { font-size: 0.65rem; letter-spacing: 0.2em; }
+  .hero-description { font-size: 0.82rem; }
+  .hero-content { padding: 1.5rem 1.5rem; padding-top: 6rem; }
+}
+
+@media (max-width: 480px) {
+  .hero-name { font-size: 2rem; }
+}

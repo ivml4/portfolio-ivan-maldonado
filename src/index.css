@@ -94,3 +94,8 @@ img {
   opacity: 1;
   transform: none;
 }
+
+/* ── Responsive globals ─────────────────────── */
+@media (max-width: 768px) {
+  .section-title { font-size: 1.6rem; margin-bottom: 2rem; }
+}

@@ -237,3 +237,17 @@
   width: 20px;
   background: var(--accent-light);
 }
+
+/* ── Responsive ─────────────────────────────── */
+@media (max-width: 768px) {
+  .projects { padding: 4rem 1.25rem; }
+  .carousel-wrapper { padding: 0 2.75rem; }
+  .carousel-arrow { width: 38px; height: 38px; }
+  .project-card { flex: 0 0 calc((100% - var(--gap)) / 2); }
+}
+
+@media (max-width: 560px) {
+  .carousel-wrapper { padding: 0 2.25rem; }
+  .carousel-arrow { width: 32px; height: 32px; }
+  .project-card { flex: 0 0 100%; }
+}

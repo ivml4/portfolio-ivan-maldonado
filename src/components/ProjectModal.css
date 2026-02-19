@@ -354,3 +354,33 @@
   background: rgba(245, 247, 250, 0.85);
   color: var(--text-secondary);
 }
+
+/* ── Responsive ─────────────────────────────── */
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal-box {
+    border-radius: 16px 16px 0 0;
+    max-height: 92vh;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .modal-content {
+    padding: 1.5rem 1.25rem 1rem;
+  }
+
+  .modal-columns {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .modal-title { font-size: 1.3rem; }
+
+  .modal-footer {
+    padding: 0.85rem 1.25rem;
+  }
+}

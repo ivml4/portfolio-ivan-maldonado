@@ -232,3 +232,10 @@ a.contact-item-value:hover {
 [data-theme="light"] .btn-submit:hover {
   background: #152555;
 }
+
+/* ── Responsive ─────────────────────────────── */
+@media (max-width: 768px) {
+  .contact-inner { padding: 4rem 1.25rem 3rem; }
+  .contact-body { grid-template-columns: 1fr; gap: 2.5rem; }
+  .contact-connect-title { font-size: 1.75rem; }
+}

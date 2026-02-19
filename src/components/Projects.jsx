@@ -99,33 +99,54 @@ const projectsData = [
   },
 ]
 
-const VISIBLE = 3
-const MAX_INDEX = projectsData.length - VISIBLE // 2
+function getVisible() {
+  if (typeof window === 'undefined') return 3
+  if (window.innerWidth <= 560) return 1
+  if (window.innerWidth <= 768) return 2
+  return 3
+}
+
+const VISIBLE = 3 // used only for server/static reference
 
 export default function Projects() {
   const { lang } = useLang()
   const tr = translations[lang].projects
+  const [visible, setVisible] = useState(getVisible)
+  const maxIndex = projectsData.length - visible
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const [modalProject, setModalProject] = useState(null)
   const headerRef = useRef(null)
   useReveal(headerRef)
 
+  useEffect(() => {
+    function onResize() {
+      setVisible(getVisible())
+    }
+    window.addEventListener('resize', onResize, { passive: true })
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  // Keep currentIndex within bounds when visible changes
+  useEffect(() => {
+    setCurrentIndex((i) => Math.min(i, Math.max(0, projectsData.length - visible)))
+  }, [visible])
+
   const prev = useCallback(() => {
     setCurrentIndex((i) => Math.max(0, i - 1))
   }, [])
 
   const next = useCallback(() => {
-    setCurrentIndex((i) => Math.min(MAX_INDEX, i + 1))
-  }, [])
+    setCurrentIndex((i) => Math.min(maxIndex, i + 1))
+  }, [maxIndex])
 
   useEffect(() => {
     if (isPaused) return
     const id = setInterval(() => {
-      setCurrentIndex((i) => (i >= MAX_INDEX ? 0 : i + 1))
+      setCurrentIndex((i) => (i >= maxIndex ? 0 : i + 1))
     }, 3500)
     return () => clearInterval(id)
-  }, [isPaused])
+  }, [isPaused, maxIndex])
 
   function openModal(projectId) {
     const idx = projectsData.findIndex((p) => p.id === projectId)
@@ -162,7 +183,7 @@ export default function Projects() {
           <div className="carousel-viewport">
             <div
               className="carousel-track"
-              style={{ transform: `translateX(calc(-${currentIndex} * (100% + var(--gap)) / ${VISIBLE}))` }}
+              style={{ transform: `translateX(calc(-${currentIndex} * (100% + var(--gap)) / ${visible}))` }}
             >
               {projectsData.map((p) => (
                 <div key={p.id} className="project-card" onClick={() => openModal(p.id)}>
@@ -189,7 +210,7 @@ export default function Projects() {
           </div>
 
           <button
-            className={`carousel-arrow carousel-arrow--next${currentIndex === MAX_INDEX ? ' carousel-arrow--hidden' : ''}`}
+            className={`carousel-arrow carousel-arrow--next${currentIndex === maxIndex ? ' carousel-arrow--hidden' : ''}`}
             onClick={next}
             aria-label={tr.nextSlide}
           >
@@ -200,7 +221,7 @@ export default function Projects() {
         </div>
 
         <div className="carousel-dots">
-          {Array.from({ length: MAX_INDEX + 1 }).map((_, i) => (
+          {Array.from({ length: maxIndex + 1 }).map((_, i) => (
             <button
               key={i}
               className={`carousel-dot${i === currentIndex ? ' carousel-dot--active' : ''}`}
