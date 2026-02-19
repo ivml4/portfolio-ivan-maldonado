@@ -74,7 +74,7 @@ export const translations = {
       message: 'Mensaje',
       messagePlaceholder: 'Cuéntame sobre tu proyecto...',
       submit: 'Enviar mensaje',
-      footer: '© 2024 Iván Maldonado · Diseñador UX/UI',
+      footer: '© 2026 Iván Maldonado · Diseñador UX/UI',
     },
     modal: {
       gallery: 'Capturas del Proyecto',
@@ -162,7 +162,7 @@ export const translations = {
       message: 'Message',
       messagePlaceholder: 'Tell me about your project...',
       submit: 'Send Message',
-      footer: '© 2024 Iván Maldonado · UX/UI Designer',
+      footer: '© 2026 Iván Maldonado · UX/UI Designer',
     },
     modal: {
       gallery: 'Project Screenshots',
